@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0 (Python 3.10.0 on win32)" generated="20220527 13:46:53.893" rpa="false" schemaversion="3">
+<suite id="s1" name="PostNewPet" source="C:\projetos\petstore\tests\Pet\PostNewPet.robot">
+<test id="s1-t1" name="New Pet" line="8">
+<kw name="Get Json" library="Helpers">
+<var>${payload}</var>
+<arg>pet</arg>
+<arg>nick.json</arg>
+<kw name="Get File" library="OperatingSystem">
+<var>${fixture}</var>
+<arg>${EXECDIR}/resources/fixtures/${route}/${file_name}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220527 13:46:54.417" level="INFO" html="true">Getting file '&lt;a href="file://C:\projetos\petstore\resources\fixtures\pet\nick.json"&gt;C:\projetos\petstore\resources\fixtures\pet\nick.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220527 13:46:54.418" level="INFO">${fixture} = {
+    "id": 0,
+    "category": {
+      "id": 0,
+      "name": "nick"
+    },
+    "name": "doggie",
+    "photoUrls": [
+      "string"
+    ],
+    "tags": [
+      {
+        "id": 0,
+        "name": "strin...</msg>
+<status status="PASS" starttime="20220527 13:46:54.417" endtime="20220527 13:46:54.418"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${json}</var>
+<arg>json.loads($fixture)</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20220527 13:46:54.426" level="INFO">${json} = {'id': 0, 'category': {'id': 0, 'name': 'nick'}, 'name': 'doggie', 'photoUrls': ['string'], 'tags': [{'id': 0, 'name': 'string'}], 'status': 'available'}</msg>
+<status status="PASS" starttime="20220527 13:46:54.418" endtime="20220527 13:46:54.427"/>
+</kw>
+<msg timestamp="20220527 13:46:54.427" level="INFO">${payload} = {'id': 0, 'category': {'id': 0, 'name': 'nick'}, 'name': 'doggie', 'photoUrls': ['string'], 'tags': [{'id': 0, 'name': 'string'}], 'status': 'available'}</msg>
+<status status="PASS" starttime="20220527 13:46:54.416" endtime="20220527 13:46:54.427"/>
+</kw>
+<kw name="POST New Pet" library="Pet">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/pet</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20220527 13:46:55.137" level="INFO">POST Request : url=https://petstore.swagger.io/v2/pet 
+ path_url=/v2/pet 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '153', 'Content-Type': 'application/json'} 
+ body=b'{"id": 0, "category": {"id": 0, "name": "nick"}, "name": "doggie", "photoUrls": ["string"], "tags": [{"id": 0, "name": "string"}], "status": "available"}' 
+ </msg>
+<msg timestamp="20220527 13:46:55.138" level="INFO">POST Response : url=https://petstore.swagger.io/v2/pet 
+ status=200, reason=OK 
+ headers={'Date': 'Fri, 27 May 2022 16:46:54 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, DELETE, PUT', 'Access-Control-Allow-Headers': 'Content-Type, api_key, Authorization', 'Server': 'Jetty(9.2.9.v20150224)'} 
+ body={"id":9223372036854088916,"category":{"id":0,"name":"nick"},"name":"doggie","photoUrls":["string"],"tags":[{"id":0,"name":"string"}],"status":"available"} 
+ </msg>
+<msg timestamp="20220527 13:46:55.138" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220527 13:46:54.428" endtime="20220527 13:46:55.138"/>
+</kw>
+<msg timestamp="20220527 13:46:55.139" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220527 13:46:54.428" endtime="20220527 13:46:55.139"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20220527 13:46:55.140" endtime="20220527 13:46:55.141"/>
+</kw>
+<status status="PASS" starttime="20220527 13:46:54.415" endtime="20220527 13:46:55.142"/>
+</test>
+<doc>New Pet</doc>
+<status status="PASS" starttime="20220527 13:46:53.896" endtime="20220527 13:46:55.144"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="PostNewPet">PostNewPet</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20220527 13:46:54.379" level="ERROR">Error in file 'C:\projetos\petstore\resources\Base.robot' on line 4: Importing library 'C:\projetos\petstore\resources\libs\mongo.py' failed: ConfigurationError: The "dnspython" module must be installed to use mongodb+srv:// URIs. To fix this error install pymongo with the srv extra:
+ C:\Python310\python.exe -m pip install "pymongo[srv]"
+Traceback (most recent call last):
+  File "C:\projetos\petstore\resources\libs\mongo.py", line 5, in &lt;module&gt;
+    client = MongoClient('mongodb+srv://qaninja:academy@cluster0.hg1st.mongodb.net/Rocklov?retryWrites=true&amp;w=majority', ssl_cert_reqs=ssl.CERT_NONE)
+  File "C:\Python310\lib\site-packages\pymongo\mongo_client.py", line 704, in __init__
+    res = uri_parser.parse_uri(
+  File "C:\Python310\lib\site-packages\pymongo\uri_parser.py", line 469, in parse_uri
+    raise ConfigurationError(
+PYTHONPATH:
+  C:\projetos\petstore\resources\libs
+  C:\Python310\Scripts\robot.exe
+  C:\Python310\python310.zip
+  C:\Python310\DLLs
+  C:\Python310\lib
+  C:\Python310
+  C:\Python310\lib\site-packages</msg>
+</errors>
+</robot>
